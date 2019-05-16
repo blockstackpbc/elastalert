@@ -18,11 +18,13 @@ RUN apk add --update --no-cache ca-certificates openssl-dev openssl python2-dev 
 
 WORKDIR "${ELASTALERT_HOME}"
 
-# Install Elastalert.
-# see: https://github.com/Yelp/elastalert/issues/1654
+## Install Elastalert.
+## see: https://github.com/Yelp/elastalert/issues/1654
 RUN sed -i 's/jira>=1.0.10/jira>=1.0.10,<1.0.15/g' setup.py && \
+    pip install botocore && \
     python setup.py install && \
     pip install -r requirements.txt
+#RUN pip install "elastalert>=${ELASTALERT_VERSION}"
 
 FROM node:alpine
 LABEL maintainer="BitSensor <dev@bitsensor.io>"
@@ -54,3 +56,4 @@ USER node
 
 EXPOSE 3030
 ENTRYPOINT ["npm", "start"]
+
