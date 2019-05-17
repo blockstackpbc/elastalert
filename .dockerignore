@@ -7,4 +7,5 @@
 !scripts/
 !elastalert_modules/
 !rule_templates/
+!rules/
 !config/

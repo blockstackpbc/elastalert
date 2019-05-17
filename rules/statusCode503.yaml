@@ -1,0 +1,15 @@
+---
+name: statusCode5XX
+type: frequency
+index: logstash-*
+num_events: 20
+timeframe:
+    minutes: 5
+filter:
+- query:
+    query_string:
+      query: "NOT remote_addr:172.20*  AND NOT path:RPC2 AND proxy_status:503"
+alert:
+  - "pagerduty"
+pagerduty_service_key: dummy
+pagerduty_client_name: Elastalert Deadman Switch
